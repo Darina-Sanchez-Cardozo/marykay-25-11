@@ -10,11 +10,19 @@ class VentaCliente extends Model
     // así que se fuerza el nombre correcto:
     protected $table = 'ventasclientes';
 
+    //protected $fillable = [
+    //    'cliente_id',
+     //   'total',
+      //  'estado',
+    //];
+
     protected $fillable = [
-        'cliente_id',
-        'total',
-        'estado',
-    ];
+    'persona_id',
+    'estado',
+    'total',
+    'fecha'
+];
+
 
     // Relación con Persona (cliente)
    public function cliente()

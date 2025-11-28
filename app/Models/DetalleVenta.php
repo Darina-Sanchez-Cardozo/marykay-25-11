@@ -14,7 +14,6 @@ class DetalleVenta extends Model
     protected $fillable = [
         'producto_id',
         'cantidad',
-        'subtotal',
         'venta_cliente_id',
         'venta_consultora_id',
     ];

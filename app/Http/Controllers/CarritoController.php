@@ -112,13 +112,15 @@ $total = $subtotal + $envio;
 }
 
 
-
-
-
 public function agregar($id)
 {
     // 1️⃣ Obtener usuario logueado
     $personaId = session('persona_id');
+
+
+    // Buscar producto
+    $producto = Producto::findOrFail($id);
+
 
     if (!$personaId) {
         return redirect()->route('usuarios.login')
@@ -128,18 +130,19 @@ public function agregar($id)
     // 2️⃣ Buscar el producto
     $producto = Producto::findOrFail($id);
 
-    // 3️⃣ Buscar o crear la venta pendiente de este usuario
     $venta = VentaCliente::firstOrCreate(
-        ['cliente_id' => $personaId, 'estado' => 'pendiente'],
-        ['total' => 0, 'fecha_venta' => now()]
-    );
+    ['persona_id' => $personaId, 'estado' => 'pendiente'], // ← columnas correctas
+    ['total' => 0, 'fecha' => now()]                      // ← columnas correctas
+        );
 
-    // 4️⃣ Crear línea del carrito (detalle de venta)
-    $detalle = DetalleVenta::create([
-        'producto_id'      => $producto->id,
-        'cantidad'         => 1,
-        'venta_cliente_id' => $venta->id
-    ]);
+
+    // Crear detalle
+$detalle = DetalleVenta::create([
+    'producto_id'      => $producto->id,
+    'cantidad'         => 1,
+    'venta_cliente_id' => $venta->id
+]);
+
 
     // 5️⃣ Recalcular total de la venta
     $venta->total = DetalleVenta::where('venta_cliente_id', $venta->id)
@@ -147,9 +150,11 @@ public function agregar($id)
     $venta->save();
 
     // 6️⃣ AHORA SÍ existe $detalle->id
-    return redirect()->route('carrito.unico', $detalle->id);
-}
+    //return redirect()->route('carrito.unico', $detalle->id);
+return redirect()->route('carrito.unico', $detalle->id)
+    ->with('success', 'Producto agregado al carrito.');
 
+}
 
 
 public function carritoUnico($id)
@@ -170,9 +175,10 @@ public function metodoPago()
     $personaId = session('persona_id');
 
     // Encontrar venta activa
-    $venta = VentaCliente::where('cliente_id', $personaId)
-                         ->where('estado', 'pendiente')
-                         ->first();
+ $venta = VentaCliente::where('persona_id', $personaId)
+    ->where('estado', 'pendiente')
+    ->first();
+
 
     if (!$venta) {
         return redirect()->route('carrito.index')
@@ -192,12 +198,10 @@ public function metodoPago()
     $subtotal = $detalle->cantidad * $detalle->producto->precio_menudeo;
     $envio = ($subtotal > 500) ? 0 : ceil($subtotal * 0.10);
     $total = $subtotal + $envio;
-
-    return view('tienda.metodo_pago', compact('detalle', 'subtotal', 'envio', 'total'));
+ 
+ return view('tienda.metodo_pago', compact('venta', 'detalle', 'subtotal', 'envio', 'total'));
+}
 }
 
 
 
-
-
-}
