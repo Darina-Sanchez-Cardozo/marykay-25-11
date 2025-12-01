@@ -8,7 +8,7 @@ class VentaCliente extends Model
 {
     // Laravel por defecto usaría la tabla 'venta_clientes',
     // así que se fuerza el nombre correcto:
-    protected $table = 'ventasclientes';
+protected $table = 'ventasclientes';
 
     //protected $fillable = [
     //    'cliente_id',

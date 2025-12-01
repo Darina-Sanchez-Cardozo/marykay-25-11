@@ -27,7 +27,7 @@
         <div class="col-md-3">
             <div class="card shadow-sm p-3 text-center">
                 <h6 class="text-muted">Catálogo Digital</h6>
-                <a href="{{ route('producto.index') }}" class="btn btn-outline-dark mt-2">
+                <a href="{{ route('tienda.index') }}" class="btn btn-outline-dark mt-2">
                     Ver Tienda Consultora
                 </a>
             </div>

@@ -20,7 +20,7 @@ class DetalleVenta extends Model
 
     public function venta()
     {
-        return $this->belongsTo(VentaCliente::class, 'venta_cliente_id');
+        return $this->belongsTo(VentaCliente::class, 'persona_id');
     }
 
     public function producto()

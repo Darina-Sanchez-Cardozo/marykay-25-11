@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Persona;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
 
 class UsuarioController extends Controller
 {
@@ -32,7 +34,8 @@ public function login(Request $request)
     session([
         'persona_id' => $persona->id,
         'persona_nombre' => $persona->nombre,
-        'persona_rol' => $persona->rol
+        'persona_rol' => $persona->rol,
+        'is_consultora'  => ($persona->rol === 'consultora') // mantener estado
     ]);
 
     // 🔥 REDIRECCIÓN SEGÚN EL ROL
@@ -69,31 +72,69 @@ public function login(Request $request)
 
     // 👉 Guardar registro
     public function registro(Request $request)
-    {
-    $request->validate([
-        'nombre' => 'required',
-        'apellido_paterno' => 'required',
-        'correo_electronico' => 'required|email|unique:personas,correo_electronico',
-        'password' => 'required|min:6',
-        'rol' => 'required|in:cliente,consultora',
-    ]);
+{
+    //procedimiento
+         $resultado = DB::select("CALL validarPersona(?, ?)", [
+            $request->correo_electronico,
+            $request->telefono
+        ]);
 
-    Persona::create([
-        'nombre' => $request->nombre,
-        'apellido_paterno' => $request->apellido_paterno,
-        'apellido_materno' => $request->apellido_materno ?? '',
-        'direccion' => $request->direccion ?? '',
-        'telefono' => $request->telefono ?? '',
-        'fecha_nacimiento' => $request->fecha_nacimiento ?? null,
-        'correo_electronico' => $request->correo_electronico,
-        'password' => bcrypt($request->password),
-        'estado' => 'Activo',
-        'rol' => $request->rol,
-    ]);
+        $respuesta = $resultado[0]->resultado;
 
-    return redirect()->route('usuarios.login')
-        ->with('success', 'Registro exitoso. Ahora inicia sesión.');
+        if ($respuesta === 'DUPLICADO_CORREO_TELEFONO') {
+            return back()->with('error', 'El correo y teléfono ya están registrados.');
+        }
+
+        if ($respuesta === 'DUPLICADO_CORREO') {
+            return back()->with('error', 'El correo ya está registrado.');
+        }
+
+        if ($respuesta === 'DUPLICADO_TELEFONO') {
+            return back()->with('error', 'El teléfono ya está registrado.');
+        }
+
+
+    try {
+
+        Persona::create([
+            'nombre'            => $request->nombre,
+            'apellido_paterno'  => $request->apellido_paterno,
+            'apellido_materno'  => $request->apellido_materno ?? '',
+            'direccion'         => $request->direccion ?? '',
+            'telefono'          => $request->telefono,
+            'fecha_nacimiento'  => $request->fecha_nacimiento,
+            'correo_electronico'=> $request->correo_electronico,
+            'password'          => bcrypt($request->password),
+            'estado'            => 'Activo',
+            'rol'               => $request->rol,
+        ]);
+
+        return redirect()->route('usuarios.login')
+            ->with('success', 'Registro exitoso.');
+
+    } catch (\Exception $e) {
+
+    $msg = $e->getMessage();
+
+    $dupTelefono = str_contains($msg, 'telefono');
+    $dupCorreo   = str_contains($msg, 'correo_electronico');
+
+    if ($dupTelefono && $dupCorreo) {
+        return back()->with('error', 'El correo y teléfono ya están registrados.');
+    }
+
+    if ($dupTelefono) {
+        return back()->with('error', 'El teléfono ya está registrado.');
+    }
+
+    if ($dupCorreo) {
+        return back()->with('error', 'El correo ya está registrado.');
+    }
+
+    return back()->with('error', 'Ocurrió un error al registrar.');
 }
 
 
+
+}
 }

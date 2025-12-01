@@ -4,6 +4,19 @@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="card shadow p-4" style="width: 520px; border-radius: 15px;">
 
+
+        @if (session('error'))
+            <div class="alert alert-danger text-center fw-bold">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success text-center fw-bold">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <h3 class="text-center mb-4" style="font-weight:700;">Registro MaryKay</h3>
 
         <form method="POST" action="{{ route('usuarios.registro.post') }}">
@@ -62,7 +75,6 @@
 
             <!-- Campos ocultos porque tienen valores por defecto -->
             <input type="hidden" name="estado" value="Activo">
-            <input type="hidden" name="rol" value="cliente">
 
             <button class="btn btn-dark w-100 py-2" style="font-size: 17px; border-radius:8px;">
                 Registrar

@@ -4,6 +4,19 @@
 
 <div class="container py-4">
 
+        {{-- MENSAJES DE ÉXITO Y ERROR/existencias insuficientes--}}
+    @if (session('success'))
+        <div class="alert alert-success text-center fw-bold">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger text-center fw-bold">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="row">
         {{-- Columna izquierda: compras --}}
         <div class="col-md-8">
@@ -93,22 +106,45 @@
                 <span>${{ number_format($subtotal, 2) }} MXN</span>
             </div>
 
-            <div class="d-flex justify-content-between mb-2">
-                <span>Envío</span>
-                @if($envio == 0 && $subtotal > 0)
-                    <span>GRATIS</span>
-                @else
-                    <span>${{ number_format($envio, 2) }} MXN</span>
-                @endif
+            {{-- DESCUENTO --}}
+            @if($descuento > 0)
+            <div class="d-flex justify-content-between mb-2 text-success fw-bold">
+                <span>Descuento ({{ $descuento }}%)</span>
+                <span>- ${{ number_format($subtotal - $subtotal_con_desc, 2) }} MXN</span>
             </div>
 
-            <div class="d-flex justify-content-between fw-bold">
-                <span>Total</span>
-                <span>${{ number_format($total, 2) }} MXN</span>
+            <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal con descuento</span>
+                <span>${{ number_format($subtotal_con_desc, 2) }} MXN</span>
             </div>
+            @endif
+            {{-- FIN DESCUENTO --}}
+
+
+             {{-- APARTADO RESUMEN --}}
+
+{{-- Mostrar Subtotal con Descuento --}}
+<div class="d-flex justify-content-between mb-2">
+    <span>Envio</span>
+    <span>${{ number_format($envio, 2) }} MXN</span>
+</div>
+
+{{-- IVA --}}
+<div class="d-flex justify-content-between mb-2">
+    <span>IVA (16%)</span>
+    <span>${{ number_format($iva, 2) }} MXN</span>
+</div>
+
+{{-- Total Final --}}
+<div class="d-flex justify-content-between fw-bold">
+    <span>Total Final</span>
+    <span>${{ number_format($total, 2) }} MXN</span>
+</div>
+
 
         </div>
     </div>
+
 
 </div>
 

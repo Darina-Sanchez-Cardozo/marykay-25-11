@@ -65,12 +65,18 @@
 
             <h3 class="fw-bold my-3">${{ number_format($producto->precio_menudeo, 2) }} pesos</h3>
 
-        <form action="{{ route('carrito.agregar', $producto->id) }}" method="GET">
+<form action="{{ route('carrito.agregar', ['id' => $producto->id]) }}" method="GET">
 
-            <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-            <input type="hidden" name="cantidad" value="1">
-            <button class="btn btn-dark">Agregar al carrito</button>
+    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+    <input type="hidden" name="cantidad" value="1">
+
+    <button class="btn btn-dark">Agregar al carrito</button>
+
+</form>
+
+
         </form>
+
 
         </div>
 
