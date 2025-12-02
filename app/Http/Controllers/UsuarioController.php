@@ -81,16 +81,17 @@ public function login(Request $request)
 
         $respuesta = $resultado[0]->resultado;
 
-        if ($respuesta === 'DUPLICADO_CORREO_TELEFONO') {
-            return back()->with('error', 'El correo y teléfono ya están registrados.');
-        }
 
         if ($respuesta === 'DUPLICADO_CORREO') {
             return back()->with('error', 'El correo ya está registrado.');
         }
 
-        if ($respuesta === 'DUPLICADO_TELEFONO') {
+        else if ($respuesta === 'DUPLICADO_TELEFONO') {
             return back()->with('error', 'El teléfono ya está registrado.');
+        }
+
+        else if ($respuesta === 'DUPLICADO_CORREO_TELEFONO') {
+            return back()->with('error', 'El correo y teléfono ya están registrados.');
         }
 
 

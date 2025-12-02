@@ -29,10 +29,6 @@
 
         </div>
 
-        <!-- IMAGEN -->
-        <div class="col-md-4 text-center">
-            <img src="https://i.imgur.com/E29MJ2w.jpeg" alt="Mary Kay perfume" class="img-fluid rounded shadow">
-        </div>
 
     </div>
 </div>

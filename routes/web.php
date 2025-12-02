@@ -6,7 +6,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+use App\Http\Controllers\AdminConsultoraController;
 use App\Http\Controllers\DashboardController;
 
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -141,3 +141,13 @@ Route::get('/mis-compras/resena/{id}', [MisComprasController::class, 'crearResen
 
 Route::post('/mis-compras/resena', [MisComprasController::class, 'guardarResena'])
     ->name('miscompras.resena.store');
+
+
+
+// Vista única con listado y detalle
+Route::get('/admin/consultoras/{id?}', [AdminConsultoraController::class, 'panel'])
+    ->name('admin.consultoras.panel');
+
+// Eliminar consultora
+Route::delete('/admin/consultoras/{id}', [AdminConsultoraController::class, 'destroy'])
+    ->name('admin.consultoras.destroy');

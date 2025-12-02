@@ -30,9 +30,11 @@
                    <a href="{{ route('almacen.index') }}" class="nav-link">Almacén</a>
                 </li>
 
-                <li class="nav-item mb-2">
-                    <a href="#" class="nav-link text-danger">Validar consultora</a>
+                   <li class="nav-item mb-2">
+                   <a href="{{ route('admin.consultoras.panel') }}" class="nav-link">Validar consultora</a>
                 </li>
+
+
 
                 <li class="nav-item mt-4">
                     <a href="{{ route('usuarios.login') }}" class="nav-link">Salir</a>
@@ -78,10 +80,40 @@
             <!-- Gráfica estática -->
             <div class="card mb-4">
                 <div class="card-header fw-bold">Estadísticas de ventas</div>
-                <div class="card-body">
-                    <img src="https://i.imgur.com/8yVA3Kx.png" 
-                         class="img-fluid" alt="gráfica ejemplo">
-                </div>
+          <div class="row text-center">
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold text-primary">Ventas Totales</h5>
+                <p class="display-6 fw-bold mb-0">4,217</p>
+                <small class="text-muted">Acumuladas del mes</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold text-success">Consultoras Activas</h5>
+                <p class="display-6 fw-bold mb-0">7</p>
+                <small class="text-muted">Realizando pedidos</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold text-danger">Productos Más Vendidos</h5>
+                <p class="fw-bold mb-1">Labial Rosa Mate</p>
+                <small class="text-muted">1,138 unidades vendidas</small>
+            </div>
+        </div>
+    </div>
+
+</div>
+
             </div>
 
             <!-- Tabla de ventas -->

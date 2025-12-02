@@ -22,10 +22,11 @@ class VentaConsultora extends Model
     public $timestamps = true;
 
     // Relación con persona (consultora)
-    public function consultora()
-    {
-        return $this->belongsTo(Persona::class, 'persona_id', 'id');
-    }
+    public function persona()
+{
+    return $this->belongsTo(Persona::class, 'persona_id');
+}
+
 
     // Relación con detalles
     public function detalles()

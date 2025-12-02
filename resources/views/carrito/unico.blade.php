@@ -89,9 +89,11 @@
             </div>
 
                         <!-- BOTÓN NUEVO SIGUIENTE -->
-            <div class="mt-3">
-                <a href="{{ route('tienda.metodo_pago') }}" class="btn btn-primary px-4">Siguiente</a>
-            </div>
+<a href="{{ route('tienda.metodo_pago') }}" class="btn btn-primary">
+    Siguiente
+</a>
+
+
 
 
         </div>
@@ -137,7 +139,7 @@
 
 {{-- Total Final --}}
 <div class="d-flex justify-content-between fw-bold">
-    <span>Total Final</span>
+    <span>Total </span>
     <span>${{ number_format($total, 2) }} MXN</span>
 </div>
 

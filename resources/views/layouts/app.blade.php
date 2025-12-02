@@ -15,13 +15,18 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-light shadow-sm">
     <div class="logo fw-bold" style="font-size:20px;">
-    Mary Kay Digital
+         *** Mary Kay Digital
 
-    @if(session()->has('persona_nombre'))
-        <span class="ms-2" style="color:#c71585;">
-            | Hola, {{ session('persona_nombre') }}
-        </span>
-    @endif
+    @if(session()->has('persona_id') 
+    && request()->path() !== 'login' 
+    && request()->path() !== 'registro')
+
+    <span class="ms-2" style="color:#c71585;">
+        | Hola, {{ session('persona_nombre') }}
+    </span>
+
+@endif
+
 </div>
 
 </nav>

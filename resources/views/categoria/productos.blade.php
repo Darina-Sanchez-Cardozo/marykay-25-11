@@ -10,12 +10,17 @@
 
     <div class="row">
 
+
         @foreach ($productos as $p)
         <div class="col-md-3 text-center mb-4">
             
-            <img src="{{ asset('img/' . $p->imagen) }}"
-                 class="img-fluid"
-                 style="height: 180px; object-fit: contain;">
+          <a href="{{ route('tienda.producto', $p->id) }}">
+    <img src="{{ asset('img/' . $p->imagen) }}"
+         class="img-fluid"
+         style="height: 180px; object-fit: contain;"
+         alt="{{ $p->nombre }}">
+</a>
+
             
             <p class="fw-semibold mt-2">{{ $p->nombre }}</p>
 

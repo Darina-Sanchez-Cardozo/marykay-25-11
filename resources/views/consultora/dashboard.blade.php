@@ -48,7 +48,36 @@
         <div class="col-md-8">
             <div class="card shadow-sm p-3">
                 <h6 class="mb-3 fw-bold">Desempeño de Ventas</h6>
-                <img src="https://i.imgur.com/4yJ8BCT.png" class="img-fluid">
+               <div class="card p-3 text-center shadow" style="border-radius: 15px;">
+
+    <img 
+        src="https://quickchart.io/chart?c={
+            type:'line',
+            data:{
+                labels:['Semana 1','Semana 2','Semana 3','Semana 4'],
+                datasets:[{
+                    label:'Ventas simuladas ($)',
+                    data:[250,420,310,580],
+                    borderColor:'pink',
+                    borderWidth:3,
+                    fill:false
+                }]
+            },
+            options:{
+                plugins:{legend:{display:true}},
+                scales:{y:{beginAtZero:true}}
+            }
+        }"
+        alt="Gráfica de desempeño de ventas"
+        class="img-fluid"
+        style="max-height: 300px; border-radius: 10px;"
+    >
+
+    <p class="text-muted mt-2" style="font-size: 0.9rem;">
+        Gráfica simulada para vista de consultora.
+    </p>
+
+</div>
             </div>
         </div>
 

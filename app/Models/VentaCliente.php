@@ -20,7 +20,7 @@ protected $table = 'ventasclientes';
     'persona_id',
     'estado',
     'total',
-    'fecha'
+    'fecha_venta'
 ];
 
 
